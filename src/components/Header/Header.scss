@@ -1,0 +1,25 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    h1{
+        margin: 0;
+    }
+    .header__button{
+        font-family: Inter;
+        border-radius: 10px;
+        font-size: 18px;
+        background-color: white;
+        padding: 15px;
+        cursor: pointer;
+    }
+    .header__signIn{
+        border: none;
+    }
+    .header__signUp{
+        color: #52C41A;
+        border: 1px solid #52C41A
+    }
+}
