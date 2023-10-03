@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Article from "../Article/Article";
 import { useDispatch } from "react-redux";
-import { fetchArticles, pageChange } from "../Redux/actions.js";
+import { fetchArticles, pageChange } from "../Redux/Articles/actions";
 import { Pagination } from "antd";
 import ReactLoading from 'react-loading';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,7 +15,8 @@ const ArticleList = () => {
   useEffect(() => {
     dispatch(fetchArticles(offset));
   }, [dispatch, offset]);
-  const articles = articlesData.map((articleInfo) => {
+  const articles = articlesData.map(articleInfo => {
+    console.log(articleInfo)
     return (
       <Article
         key={uuidv4()}
@@ -26,6 +27,7 @@ const ArticleList = () => {
         tagList={articleInfo.tagList}
         createTime={articleInfo.createdAt}
         slug={articleInfo.slug}
+        likes={articleInfo.favoritesCount}
       />
     );
   });
