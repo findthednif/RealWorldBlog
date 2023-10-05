@@ -2,6 +2,7 @@ const initialState = {
   userData: null,
   authorized: false,
   loading: false,
+  deleteConfirm: false
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -17,6 +18,8 @@ const userReducer = (state = initialState, action) => {
         userData: null,
         authorized: false,
       };
+    case "delete_confirm":
+      return {...state, deleteConfirm: !state.deleteConfirm}
     default:
       return state;
   }

@@ -39,6 +39,10 @@ const RegistrationForm = () => {
         });
       } else {
         console.error(error);
+        setError("serverError", {
+          type: "manual",
+          message: "Uh, oh, that was unexpected server error",
+        });
       }
     }
   };

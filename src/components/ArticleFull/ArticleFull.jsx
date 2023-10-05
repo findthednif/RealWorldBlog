@@ -25,6 +25,8 @@ const ArticleFull = () => {
           tagList={fullArticleData.tagList}
           createTime={fullArticleData.createdAt}
           body={fullArticleData.body}
+          likes={fullArticleData.favoritesCount}
+          slug={slug}
         />
       )}
     </>

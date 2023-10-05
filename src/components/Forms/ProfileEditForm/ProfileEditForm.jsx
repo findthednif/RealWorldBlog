@@ -20,6 +20,7 @@ const ProfileEditForm = () => {
     register,
     handleSubmit,
     clearErrors,
+    setError,
     formState: { errors },
   } = useForm({ mode: "all" });
   const {
@@ -31,24 +32,42 @@ const ProfileEditForm = () => {
     invalid,
     form__submit,
   } = styles;
-  const { userData, loading, authorized } = useSelector((state) => state.userReducer);
-  
+  const { loading } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const token = JSON.parse(localStorage.getItem('token'))
   useEffect(()=>{
-    if(!authorized){
+    if(!token){
       navigate('/sign-in')
     }
-  },[navigate, authorized])
+  },[navigate, token])
   const onSubmit = async (data) => {
-    dispatch(userDataFetchStart());
+    try{
+      dispatch(userDataFetchStart());
     const request = {
       user: data,
     };
-    const responce = await editUser(request, userData.token);
+    const responce = await editUser(request, token);
     dispatch(userLogin(responce));
     dispatch(userDataFetchEnd());
-    navigate("/");
+    navigate("/")
+    }
+    catch (error) {
+      dispatch(userDataFetchEnd())
+      if (error.status === 422) {
+        setError("serverError", {
+          type: "manual",
+          message: "Email is busy. Please, try again",
+        });
+      } else {
+        console.error(error);
+        setError("serverError", {
+          type: "manual",
+          message: "Uh, oh, that was unexpected server error",
+        });
+      }
+    }
+    ;
   };
   return (
     <form className={form} onSubmit={handleSubmit(onSubmit)}>
@@ -99,14 +118,16 @@ const ProfileEditForm = () => {
           placeholder="Avatar image"
         />
       </label>
-      {errors.emptyForm && (
-        <span style={{ color: "red" }}>{errors.emptyForm.message}</span>
+      {errors.serverError && (
+        <span style={{ color: "red" }}>
+          {errors.serverError.message}
+        </span>
       )}
       <button
         className={form__submit}
         type="submit"
         onClick={() => {
-          clearErrors("emptyForm");
+          clearErrors("serverError");
         }}
       >
         Save

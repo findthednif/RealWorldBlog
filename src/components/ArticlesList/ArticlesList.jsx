@@ -16,7 +16,6 @@ const ArticleList = () => {
     dispatch(fetchArticles(offset));
   }, [dispatch, offset]);
   const articles = articlesData.map(articleInfo => {
-    console.log(articleInfo)
     return (
       <Article
         key={uuidv4()}

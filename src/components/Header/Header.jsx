@@ -28,9 +28,9 @@ const Header = () => {
     } else
       return (
         <div className="header__main">
-          <Link className="main__link main__createArticle">Create article</Link>
-          <Link to={"/profile"} className="main__link main__username">{userData.username}</Link>
-          <Link to={"/profile"} className="main__link">
+          <Link to="/new-article" className="main__link main__createArticle">Create article</Link>
+          <Link to="/profile" className="main__link main__username">{userData.username}</Link>
+          <Link to="/profile" className="main__link">
             <Image src={userData.image} fallback={noAvatarImage} preview={false}></Image>
           </Link>
           <Link to='/' className="main__link main__logOut" onClick={logOut}>Log Out</Link>

@@ -24,3 +24,8 @@ export const userLogin = (userData) => {
       type: "user_login_error",
     };
   };
+export const deleteArticleConfirm = () =>{
+  return {
+    type: 'delete_confirm'
+  }
+}
