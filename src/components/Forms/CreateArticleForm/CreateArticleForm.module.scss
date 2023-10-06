@@ -47,7 +47,7 @@
     list-style-type: none;
     border-bottom: 0.5px solid #8c8c8c;
     padding-bottom: 10px;
-    .tagList__tag{
+    .tagList__tag {
       box-sizing: border-box;
       display: inline-block;
       font-size: 20px;
@@ -70,14 +70,14 @@
     border: 1px solid #1890ff;
     color: #1890ff;
   }
-  .sendButton{
+  .sendButton {
     background-color: #1890ff;
     color: white;
     border: none;
     margin: 0;
     width: 300px;
   }
-  .reactloading{
+  .reactloading {
     align-self: center;
   }
 }

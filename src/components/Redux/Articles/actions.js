@@ -1,8 +1,9 @@
-import { getGlobalArticles, getArticle } from "../../../Services/apiRequests.js"
-export const fetchArticlesStart = () => ({ type: "fetch_articles_start" });
-export const fetchArticlesEnd = () => ({ type: "fetch_articles_end" });
+import { getGlobalArticles, getArticle } from '../../../Services/apiRequests';
+
+export const fetchArticlesStart = () => ({ type: 'fetch_articles_start' });
+export const fetchArticlesEnd = () => ({ type: 'fetch_articles_end' });
 export const fetchArticlesSuccess = (articles) => ({
-  type: "fetch_articles_success",
+  type: 'fetch_articles_success',
   payload: articles,
 });
 export const fetchArticles = (offset) => async (dispatch) => {
@@ -15,9 +16,9 @@ export const fetchArticles = (offset) => async (dispatch) => {
     console.error(error);
   }
 };
-export const pageChange = (page) => ({ type: "page_change", payload: page });
+export const pageChange = (page) => ({ type: 'page_change', payload: page });
 export const fetchFullArticleSuccess = (article) => ({
-  type: "fetch_full_article_success",
+  type: 'fetch_full_article_success',
   payload: article,
 });
 export const fetchArticle = (slug) => async (dispatch) => {

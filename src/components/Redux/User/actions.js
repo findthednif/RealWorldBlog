@@ -1,31 +1,19 @@
-export const userDataFetchStart = () =>{
-  return{
-    type: 'user_data_fetch_start'
-  }
-}
-export const userDataFetchEnd = () =>{
-  return{
-    type:'user_data_fetch_end'
-  }
-}
-export const userLogin = (userData) => {
-    return {
-      type: "user_login",
-      payload: userData.user,
-    };
-  };
-  export const userLogout = () => {
-    return {
-      type: "user_logout",
-    };
-  };
-  export const userInputError = () => {
-    return {
-      type: "user_login_error",
-    };
-  };
-export const deleteArticleConfirm = () =>{
-  return {
-    type: 'delete_confirm'
-  }
-}
+export const userDataFetchStart = () => ({
+  type: 'user_data_fetch_start',
+});
+export const userDataFetchEnd = () => ({
+  type: 'user_data_fetch_end',
+});
+export const userLogin = (userData) => ({
+  type: 'user_login',
+  payload: userData.user,
+});
+export const userLogout = () => ({
+  type: 'user_logout',
+});
+export const userInputError = () => ({
+  type: 'user_login_error',
+});
+export const deleteArticleConfirm = () => ({
+  type: 'delete_confirm',
+});

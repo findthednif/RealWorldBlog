@@ -1,19 +1,22 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styles from "./EditArticleForm.module.scss";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import ReactLoading from 'react-loading';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { useForm } from 'react-hook-form';
+
+import { editArticle } from '../../../Services/apiRequests';
+import { userDataFetchStart, userDataFetchEnd } from '../../Redux/User/actions';
 import {
   addTag,
   inputTag,
   deleteTag,
   deleteAll,
-} from "../../Redux/CreateArticle/action";
-import { v4 as uuidv4 } from "uuid";
-import { useForm } from "react-hook-form";
-import { editArticle } from "../../../Services/apiRequests";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { userDataFetchStart, userDataFetchEnd } from "../../Redux/User/actions";
-import ReactLoading from "react-loading";
-const EditArticleForm = () => {
+} from '../../Redux/CreateArticle/action';
+
+import styles from './EditArticleForm.module.scss';
+
+function EditArticleForm() {
   const {
     form,
     form__title,
@@ -29,19 +32,19 @@ const EditArticleForm = () => {
     tagList__tag,
     sendButton,
   } = styles;
-  const { slug } = useParams()
-  const { title, description, body, tagList} = useLocation().state
-  const token = JSON.parse(localStorage.getItem("token"));
+  const { slug } = useParams();
+  const { title, description, body, tagList } = useLocation().state;
+  const token = JSON.parse(localStorage.getItem('token'));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) {
-      navigate("/sign-in");
+      navigate('/sign-in');
     }
-    if(tagList.length !== 0 ){
-      tagList.forEach(tag =>{
-        dispatch(addTag(tag))
-      })
+    if (tagList.length !== 0) {
+      tagList.forEach((tag) => {
+        dispatch(addTag(tag));
+      });
     }
   }, [dispatch, navigate, token, tagList]);
   const {
@@ -50,30 +53,30 @@ const EditArticleForm = () => {
     clearErrors,
     setError,
     formState: { errors },
-  } = useForm({ mode: "all" });
+  } = useForm({ mode: 'all' });
   const { currentTag, tagsList } = useSelector(
-    (state) => state.createArticleReducer
+    (state) => state.createArticleReducer,
   );
   const { loading } = useSelector((state) => state.userReducer);
   const tagListContent = () => {
     if (tagsList.length !== 0) {
-      return tagsList.map((tag, index) => {
-        return (
-          <li key={uuidv4()}>
-            <span className={tagList__tag}>{tag} </span>
-            <button
-              className={deleteButton}
-              type="button"
-              onClick={() => {
-                dispatch(deleteTag(index));
-              }}
-            >
-              Delete
-            </button>
-          </li>
-        );
-      });
-    } else return null;
+      return tagsList.map((tag, index) => (
+        <li key={uuidv4()}>
+          <span className={tagList__tag}>{tag} </span>
+          <button
+            className={deleteButton}
+            type='button'
+            onClick={() => {
+              console.log(index);
+              dispatch(deleteTag(index));
+            }}
+          >
+            Delete
+          </button>
+        </li>
+      ));
+    }
+    return null;
   };
   const onSubmit = async (data) => {
     const articleData = {
@@ -81,27 +84,27 @@ const EditArticleForm = () => {
         title: data.title,
         description: data.description,
         body: data.text,
-        tagList: tagsList
+        tagList: tagsList,
       },
     };
     try {
       dispatch(userDataFetchStart());
-      const responce = await editArticle(articleData, token, slug);
+      await editArticle(articleData, slug);
       dispatch(deleteAll());
       dispatch(userDataFetchEnd());
-      navigate("/");
+      navigate('/');
     } catch (error) {
       dispatch(userDataFetchEnd());
       if (error.status === 422) {
-        setError("serverError", {
-          type: "manual",
-          message: "Wrong data. Please, try again",
+        setError('serverError', {
+          type: 'manual',
+          message: 'Wrong data. Please, try again',
         });
       } else {
         console.error(error);
-        setError("serverError", {
-          type: "manual",
-          message: "Uh, oh, that was unexpected server error",
+        setError('serverError', {
+          type: 'manual',
+          message: 'Uh, oh, that was unexpected server error',
         });
       }
     }
@@ -109,38 +112,38 @@ const EditArticleForm = () => {
   return (
     <form className={form} onSubmit={handleSubmit(onSubmit)}>
       {loading && (
-        <ReactLoading type="spin" color="#1890ff" className={reactloading} />
+        <ReactLoading type='spin' color='#1890ff' className={reactloading} />
       )}
       <h2 className={form__title}>Edit article</h2>
       <label className={form__userdata}>
         Title
         <input
-          {...register("title")}
+          {...register('title')}
           defaultValue={title}
           className={form__input}
-          placeholder="Title"
+          placeholder='Title'
           required
         />
       </label>
       <label className={form__userdata}>
         Short description
         <input
-          {...register("description")}
+          {...register('description')}
           defaultValue={description}
           className={form__input}
-          placeholder="Description"
+          placeholder='Description'
           required
         />
       </label>
       <label className={form__userdata}>
         Text
         <textarea
-          {...register("text")}
+          {...register('text')}
           defaultValue={body}
-          placeholder="Text"
+          placeholder='Text'
           className={`${form__input} ${userData__textarea}`}
           required
-        ></textarea>
+        />
       </label>
       {tagListContent() && (
         <ul className={form__taglist}>
@@ -152,29 +155,29 @@ const EditArticleForm = () => {
         <input
           value={currentTag}
           className={`${form__input} ${form__taginput}`}
-          placeholder="Tag"
+          placeholder='Tag'
           onChange={(evt) => {
             dispatch(inputTag(evt.target.value));
           }}
         />
         {errors.serverError && (
-          <span style={{ color: "red" }}>{errors.serverError.message}</span>
+          <span style={{ color: 'red' }}>{errors.serverError.message}</span>
         )}
         <button
           className={addButton}
-          type="button"
+          type='button'
           onClick={() => {
             dispatch(addTag());
-            clearErrors("serverError");
+            clearErrors('serverError');
           }}
         >
           Add tag
         </button>
       </label>
-      <button type="submit" className={sendButton}>
+      <button type='submit' className={sendButton}>
         Send
       </button>
     </form>
   );
-};
+}
 export default EditArticleForm;

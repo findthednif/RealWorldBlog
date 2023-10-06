@@ -6,22 +6,29 @@
   background-color: white;
   padding: 15px;
   width: 70%;
+  min-width: 320px;
   .article__main {
     width: 70%;
     .main__info {
-      overflow-wrap: break-word;
+      overflow-wrap: anywhere;
       padding-top: 10px;
     }
     .main__title {
+      display: flex;
+      align-items: center;
       padding: 0;
-      .title__like {
-        color: tomato;
-        padding-right: 2.5px;
-        padding-left: 15px;
-      }
-      .title__dislike {
-        padding-right: 2.5px;
-        padding-left: 15px;
+      flex-wrap: wrap;
+      gap: 5px;
+      .title__likes {
+        display: flex;
+        button {
+          background-color: white;
+          border: none;
+          cursor: pointer;
+        }
+        .likes__like {
+          color: tomato;
+        }
       }
       .title__link {
         font-size: 20px;
@@ -30,7 +37,6 @@
       }
     }
   }
-
   .wrap {
     display: flex;
     flex-direction: column;
