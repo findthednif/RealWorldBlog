@@ -37,6 +37,7 @@ function Header() {
         </Link>
         <Link to='/profile' className='main__link'>
           <Image
+            className='main__image'
             src={userData.image}
             fallback={noAvatarImage}
             preview={false}

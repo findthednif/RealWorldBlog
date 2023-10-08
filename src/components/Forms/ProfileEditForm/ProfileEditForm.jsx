@@ -45,6 +45,7 @@ function ProfileEditForm() {
     }
   }, [navigate, token]);
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       dispatch(userDataFetchStart());
       const request = {
@@ -113,7 +114,7 @@ function ProfileEditForm() {
       <label className={form__userdata}>
         Avatar image (url)
         <input
-          {...register('avatarImg')}
+          {...register('image')}
           className={userdata__input}
           type='text'
           placeholder='Avatar image'
