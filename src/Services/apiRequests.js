@@ -1,9 +1,9 @@
-const userToken = JSON.parse(localStorage.getItem('token'));
+const userToken = () => JSON.parse(localStorage.getItem('token'));
 const url = 'https://blog.kata.academy/api/';
 export const getGlobalArticles = async (offset) => {
   const fetchParams = {
     headers: {
-      Authorization: `Token ${userToken}`,
+      Authorization: `Token ${userToken()}`,
     },
   };
   const responce = await fetch(
@@ -19,7 +19,7 @@ export const getGlobalArticles = async (offset) => {
 export const getArticle = async (slug) => {
   const fetchParams = {
     headers: {
-      Authorization: `Token ${userToken}`,
+      Authorization: `Token ${userToken()}`,
     },
   };
   const responce = await fetch(`${url}articles/${slug}`, fetchParams);
@@ -66,7 +66,7 @@ export const loginUser = async (userData) => {
 export const getUser = async () => {
   const fetchParams = {
     headers: {
-      Authorization: `Token ${userToken}`,
+      Authorization: `Token ${userToken()}`,
     },
   };
   const responce = await fetch(`${url}user`, fetchParams);
@@ -80,7 +80,7 @@ export const editUser = async (userData) => {
   const fetchParams = {
     method: 'PUT',
     headers: {
-      Authorization: `Token ${userToken}`,
+      Authorization: `Token ${userToken()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(userData),
@@ -98,7 +98,7 @@ export const createArticle = async (articleData) => {
   const fetchParams = {
     method: 'POST',
     headers: {
-      Authorization: `Token ${userToken}`,
+      Authorization: `Token ${userToken()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(articleData),
@@ -116,7 +116,7 @@ export const editArticle = async (articleData, slug) => {
   const fetchParams = {
     method: 'PUT',
     headers: {
-      Authorization: `Token ${userToken}`,
+      Authorization: `Token ${userToken()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(articleData),
@@ -134,7 +134,7 @@ export const deleteArticle = async (slug) => {
   const fetchParams = {
     method: 'DELETE',
     headers: {
-      Authorization: `Token ${userToken}`,
+      Authorization: `Token ${userToken()}`,
     },
   };
   const responce = await fetch(`${url}articles/${slug}`, fetchParams);
@@ -149,7 +149,7 @@ export const favoriteArticle = async (slug) => {
   const fetchParams = {
     method: 'POST',
     headers: {
-      Authorization: `Token ${userToken}`,
+      Authorization: `Token ${userToken()}`,
       'Content-Type': 'application/json',
     },
   };
@@ -166,7 +166,7 @@ export const unFavoriteArticle = async (slug) => {
   const fetchParams = {
     method: 'DELETE',
     headers: {
-      Authorization: `Token ${userToken}`,
+      Authorization: `Token ${userToken()}`,
     },
   };
   const responce = await fetch(`${url}articles/${slug}/favorite`, fetchParams);

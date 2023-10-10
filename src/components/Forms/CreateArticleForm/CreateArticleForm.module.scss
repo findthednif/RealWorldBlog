@@ -18,6 +18,10 @@
     font-size: 20px;
     cursor: pointer;
   }
+  input,
+  textarea {
+    padding-left: 10px;
+  }
   .form__title {
     align-self: center;
     margin: 0;

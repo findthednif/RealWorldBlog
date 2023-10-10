@@ -25,7 +25,7 @@ const articlesReducer = (state = initialState, action) => {
     case 'page_change':
       return { ...state, currentPage: action.payload };
     case 'user_login':
-      return { ...state, userData: action.payload, authorized: true };
+      return { ...state, userData: action.payload };
     case 'user_logout':
       return {
         ...state,

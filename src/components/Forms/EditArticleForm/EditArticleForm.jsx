@@ -33,20 +33,29 @@ function EditArticleForm() {
     sendButton,
   } = styles;
   const { slug } = useParams();
-  const { title, description, body, tagList } = useLocation().state;
+  const articleInfo = useLocation().state;
   const token = JSON.parse(localStorage.getItem('token'));
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const articleData = {
+    title: articleInfo ? articleInfo.title : '',
+    description: articleInfo ? articleInfo.description : '',
+    body: articleInfo ? articleInfo.body : '',
+    tagList: articleInfo ? articleInfo.tagList : '',
+  };
   useEffect(() => {
     if (!token) {
       navigate('/sign-in');
     }
-    if (tagList.length !== 0) {
-      tagList.forEach((tag) => {
+    if (!articleInfo) {
+      navigate('/');
+    }
+    if (articleData.tagList.length !== 0) {
+      articleData.tagList.forEach((tag) => {
         dispatch(addTag(tag));
       });
     }
-  }, [dispatch, navigate, token, tagList]);
+  }, [dispatch, navigate, token, articleInfo, articleData.tagList]);
   const {
     register,
     handleSubmit,
@@ -79,7 +88,7 @@ function EditArticleForm() {
     return null;
   };
   const onSubmit = async (data) => {
-    const articleData = {
+    const article = {
       article: {
         title: data.title,
         description: data.description,
@@ -89,7 +98,7 @@ function EditArticleForm() {
     };
     try {
       dispatch(userDataFetchStart());
-      await editArticle(articleData, slug);
+      await editArticle(article, slug);
       dispatch(deleteAll());
       dispatch(userDataFetchEnd());
       navigate('/');
@@ -119,7 +128,7 @@ function EditArticleForm() {
         Title
         <input
           {...register('title')}
-          defaultValue={title}
+          defaultValue={articleData.title}
           className={form__input}
           placeholder='Title'
           required
@@ -129,7 +138,7 @@ function EditArticleForm() {
         Short description
         <input
           {...register('description')}
-          defaultValue={description}
+          defaultValue={articleData.description}
           className={form__input}
           placeholder='Description'
           required
@@ -139,7 +148,7 @@ function EditArticleForm() {
         Text
         <textarea
           {...register('text')}
-          defaultValue={body}
+          defaultValue={articleData.body}
           placeholder='Text'
           className={`${form__input} ${userData__textarea}`}
           required

@@ -26,12 +26,12 @@
       border-radius: 4px;
       padding-left: 10px;
     }
-    .userdata__input--invalid {
+    .userdata__input__invalid {
       border: 1px solid red;
     }
-    .userdata__error {
-      color: red;
-    }
+  }
+  .userdata__error {
+    color: red;
   }
   .form__agreement {
     border-top: 1px solid #8c8c8c;
@@ -55,10 +55,6 @@
     width: 320px;
     height: 40px;
     cursor: pointer;
-  }
-  .form__submit:disabled {
-    background-color: #e0e0e0;
-    color: #a9a9a9;
   }
   .form__question {
     font-weight: 400;

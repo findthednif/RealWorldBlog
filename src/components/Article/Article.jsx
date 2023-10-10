@@ -1,5 +1,3 @@
-import './Article.scss';
-
 import { Typography, Image } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { format } from 'date-fns';
@@ -14,6 +12,7 @@ import { deleteArticleConfirm } from '../Redux/User/actions';
 import { favoriteArticle, unFavoriteArticle } from '../../Services/apiRequests';
 
 import DeleteConfirm from './DeleteConfirm/DeleteConfirm';
+import styles from './Article.module.scss';
 
 const { Text } = Typography;
 function Article(props) {
@@ -30,6 +29,23 @@ function Article(props) {
     liked,
     likes,
   } = props;
+  const {
+    article,
+    article__main,
+    main__info,
+    main__title,
+    title__likes,
+    likes__like,
+    title__link,
+    wrap,
+    article__author,
+    author__info,
+    autor__img,
+    buttons,
+    button,
+    deleteButton,
+    editButton,
+  } = styles;
   const token = localStorage.getItem('token');
   const [isLiked, setIsLiked] = useState(liked);
   const [likedCount, setLikedCount] = useState(likes);
@@ -67,18 +83,18 @@ function Article(props) {
   let likeContent;
   if (isLiked) {
     likeContent = (
-      <div className='title__likes'>
+      <div className={title__likes}>
         <button type='button' onClick={() => likeArticle(slug)}>
-          <HeartFilled className='likes__like' />
+          <HeartFilled className={likes__like} />
         </button>
         <span>{likedCount}</span>
       </div>
     );
   } else {
     likeContent = (
-      <div className='title__likes'>
+      <div className={title__likes}>
         <button type='button' onClick={() => likeArticle(slug)}>
-          <HeartOutlined className='likes__dislike' />
+          <HeartOutlined />
         </button>
         {likedCount}
       </div>
@@ -86,8 +102,8 @@ function Article(props) {
   }
   if (body) {
     titleContent = (
-      <div className='main__info main__title'>
-        <Link to='/' className='title__link'>
+      <div className={`${main__info} ${main__title}`}>
+        <Link to='/' className={title__link}>
           {title}
         </Link>
         {likeContent}
@@ -95,8 +111,8 @@ function Article(props) {
     );
   } else {
     titleContent = (
-      <div className='main__info main__title'>
-        <Link to={`/articles/${slug}`} className='title__link'>
+      <div className={`${main__info} ${main__title}`}>
+        <Link to={`/articles/${slug}`} className={title__link}>
           {title}
         </Link>
         {likeContent}
@@ -104,31 +120,31 @@ function Article(props) {
     );
   }
   return (
-    <article className='article'>
-      <div className='article__main'>
+    <article className={article}>
+      <div className={article__main}>
         {titleContent}
-        <div className='main__info'>{tags}</div>
-        <div className='main__info'>{description}</div>
-        {body && <ReactMarkdown className='main__info'>{body}</ReactMarkdown>}
+        <div className={main__info}>{tags}</div>
+        <div className={main__info}>{description}</div>
+        {body && <ReactMarkdown className={main__info}>{body}</ReactMarkdown>}
       </div>
-      <div className='wrap'>
-        <div className='article__author'>
-          <div className='author__info'>
+      <div className={wrap}>
+        <div className={article__author}>
+          <div className={author__info}>
             <div>{author}</div>
             <Text type='secondary'>{date}</Text>
           </div>
           <Image
-            className='autor__img'
+            className={autor__img}
             src={imageUrl}
             fallback={noAvatarImage}
           />
         </div>
         {isOwner && body && (
           <>
-            <div className='buttons'>
+            <div className={buttons}>
               <button
                 type='button'
-                className='button deleteButton'
+                className={`${button} ${deleteButton}`}
                 onClick={() => {
                   dispatch(deleteArticleConfirm());
                 }}
@@ -138,7 +154,7 @@ function Article(props) {
               <Link
                 to={`/articles/${slug}/edit`}
                 state={{ title, description, body, tagList }}
-                className='button editButton'
+                className={`${button} ${editButton}`}
               >
                 Edit
               </Link>

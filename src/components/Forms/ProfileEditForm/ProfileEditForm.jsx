@@ -39,6 +39,12 @@ function ProfileEditForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = JSON.parse(localStorage.getItem('token'));
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  const defaultValues = {
+    username: userData ? userData.user.username : '',
+    email: userData ? userData.user.email : '',
+    image: userData ? userData.user.image : '',
+  };
   useEffect(() => {
     if (!token) {
       navigate('/sign-in');
@@ -82,6 +88,7 @@ function ProfileEditForm() {
           className={`${userdata__input} ${errors.username ? invalid : ''}`}
           type='text'
           placeholder='Username'
+          defaultValue={defaultValues.username}
         />
         {errors.username && (
           <span className={userdata__error}>{errors.username.message}</span>
@@ -94,6 +101,7 @@ function ProfileEditForm() {
           className={`${userdata__input} ${errors.email ? invalid : ''}`}
           type='email'
           placeholder='Email address'
+          defaultValue={defaultValues.email}
         />
         {errors.email && (
           <span className={userdata__error}>{errors.email.message}</span>
@@ -118,6 +126,7 @@ function ProfileEditForm() {
           className={userdata__input}
           type='text'
           placeholder='Avatar image'
+          defaultValue={defaultValues.image}
         />
       </label>
       {errors.serverError && (

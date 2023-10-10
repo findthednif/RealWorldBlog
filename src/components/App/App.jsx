@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import './App.scss';
 import Header from '../Header/Header';
 import ArticlesList from '../ArticlesList/ArticlesList';
 import ArticleFull from '../ArticleFull/ArticleFull';
@@ -14,7 +13,10 @@ import { userLogin } from '../Redux/User/actions';
 import { getUser } from '../../Services/apiRequests';
 import EditArticleForm from '../Forms/EditArticleForm/EditArticleForm';
 
+import styles from './App.module.scss';
+
 function App() {
+  const { main } = styles;
   const dispatch = useDispatch();
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -27,7 +29,7 @@ function App() {
   return (
     <Router>
       <Header />
-      <main className='main'>
+      <main className={main}>
         <Routes>
           <Route path='/' element={<ArticlesList />} />
           <Route path='/articles/' element={<ArticlesList />} />
