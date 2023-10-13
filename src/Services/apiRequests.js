@@ -38,12 +38,14 @@ export const registerUser = async (userData) => {
     body: JSON.stringify(userData),
   };
   const responce = await fetch(`${url}users`, fetchParams);
+  const data = await responce.json();
+  console.log(data);
   if (responce.ok) {
-    const data = await responce.json();
     return data;
   }
   const error = new Error(`registerUser fetch failed, ${responce.status}`);
   error.status = responce.status;
+  error.messages = data.errors;
   throw error;
 };
 export const loginUser = async (userData) => {

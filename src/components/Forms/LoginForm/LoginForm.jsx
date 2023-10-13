@@ -106,7 +106,7 @@ function LoginForm() {
         Login
       </button>
       <span className={form__question}>
-        Don`&apos;`t have an account?{' '}
+        Don&apos;t have an account?{' '}
         <Link to='/sign-up' className={homepageLink}>
           Sign Up
         </Link>

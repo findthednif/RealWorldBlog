@@ -57,17 +57,33 @@ function RegistrationForm() {
       navigate('/');
     } catch (error) {
       dispatch(userDataFetchEnd());
-      console.log(error.status);
       if (error.status === 422) {
-        setError('serverError', {
-          type: 'manual',
-          message: 'Email or username is already registered. Please, try again',
-        });
+        const { username, email } = error.messages;
+        if (username && email) {
+          setError('bothError', {
+            type: 'manual',
+            message: `Username ${username} Email ${email} Please, try again`,
+          });
+        } else {
+          if (username) {
+            setError('usernameError', {
+              type: 'manual',
+              message: `Username ${username} Please, try again`,
+            });
+          }
+          if (email) {
+            setError('emailError', {
+              type: 'manual',
+              message: `Email ${email} Please, try again`,
+            });
+          }
+        }
       } else {
         console.error(error);
         setError('serverError', {
           type: 'manual',
-          message: 'Uh, oh, that was unexpected server error',
+          message:
+            'Uh, oh, that was unexpected. Something wrong with the server',
         });
       }
     }
@@ -141,6 +157,15 @@ function RegistrationForm() {
         <input className={agreement__checkbox} type='checkbox' required />
         <div>I agree to the processing of my personal information</div>
       </label>
+      {errors.bothError && (
+        <span style={{ color: 'red' }}>{errors.bothError.message}</span>
+      )}
+      {errors.emailError && (
+        <span style={{ color: 'red' }}>{errors.emailError.message}</span>
+      )}
+      {errors.usernameError && (
+        <span style={{ color: 'red' }}>{errors.usernameError.message}</span>
+      )}
       {errors.serverError && (
         <span style={{ color: 'red' }}>{errors.serverError.message}</span>
       )}
@@ -148,7 +173,12 @@ function RegistrationForm() {
         className={form__submit}
         type='submit'
         onClick={() => {
-          clearErrors('serverError');
+          clearErrors([
+            'serverError',
+            'bothError',
+            'usernameError',
+            'emailError',
+          ]);
         }}
       >
         Create
